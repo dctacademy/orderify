@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Orderify</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% if user_signed_in? %>
+
+	<% if can? :create, Role.new %>
+		<%= link_to "Roles", roles_path %> |
+	<% end %>
+
+	<% if can? :read, Product.new %>
+		<%= link_to "Products", products_path %> | 
+	<% end %>
+
+	<%= link_to "Cart (#{current_user.line_items.size})", line_items_path %> | 
+
+	<%= link_to "Orders", orders_path %> | 
+	
+	<%= link_to "logout", destroy_user_session_path, method: :delete %>
+<% else %>
+	
+	<%= link_to "Register", new_user_registration_path %>
+	<%= link_to "Login", new_user_session_path %>
+
+<% end %>
+
+
+<%= alert %>
+<%= notice %>
+
+<%= yield %>
+
+</body>
+</html>
